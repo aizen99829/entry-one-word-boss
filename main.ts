@@ -8,23 +8,21 @@
  */
 
 const WORD = "Hoverer";
+const MAX_WORD_LENGTH = 30;
 
-function assertSingleWord(word: string): void {
-  if (word.length < 1 || word.length > 30) {
-    throw new Error("word must be 1-30 characters");
+function validatedWord(word: string): string {
+  if (word.length < 1 || word.length > MAX_WORD_LENGTH) {
+    throw new Error(`word must be 1-${MAX_WORD_LENGTH} characters`);
   }
   if (word.trim().length === 0) {
     throw new Error("word must not be blank");
   }
-  if (word !== word.trim()) {
-    throw new Error("word must not have leading or trailing spaces");
-  }
-  if (/\s/.test(word)) {
+  if (word !== word.trim() || /\s/.test(word)) {
     throw new Error("word must be a single word with no spaces");
   }
+  return word;
 }
 
 export function main(): string {
-  assertSingleWord(WORD);
-  return WORD;
+  return validatedWord(WORD);
 }
